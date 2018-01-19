@@ -1,4 +1,4 @@
-package me.saket.baseandroidproject.utils;
+package me.saket.rxdiffutils;
 
 import com.ryanharter.auto.value.moshi.MoshiAdapterFactory;
 import com.squareup.moshi.JsonAdapter;
@@ -6,9 +6,7 @@ import com.squareup.moshi.JsonAdapter;
 @MoshiAdapterFactory
 public abstract class AutoValueMoshiAdapterFactory implements JsonAdapter.Factory {
 
-  public static JsonAdapter.Factory create() {
-    // AutoValueMoshi_AutoValueMoshiAdapterFactory gets generated
-    // only when there's atleast one AutoValue class with a static jsonAdapter() method.
+  public static AutoValueMoshiAdapterFactory create() {
     return new AutoValueMoshi_AutoValueMoshiAdapterFactory();
   }
 }

@@ -1,4 +1,4 @@
-package me.saket.baseandroidproject;
+package me.saket.rxdiffutils;
 
 import android.app.Application;
 import timber.log.Timber;

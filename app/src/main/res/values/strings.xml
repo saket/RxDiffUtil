@@ -1,3 +1,4 @@
 <resources>
-  <string name="app_name">BaseAndroidProject</string>
+  <string name="app_name">Rx.DiffUtils</string>
+  <string name="search_repositories">Search repositories…</string>
 </resources>

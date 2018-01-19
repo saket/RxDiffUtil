@@ -8,6 +8,7 @@ ext.versions = [
     autoValue     : '1.4',
     autoValueMoshi: '0.4.3',
     retrofit      : '2.2.0',
+    okHttp        : '3.6.0',
     rxBindings    : '2.0.0',
     dagger        : '2.10',
     butterKnife   : '8.8.1',
@@ -18,7 +19,7 @@ android {
   compileSdkVersion versions.compileSdk
 
   defaultConfig {
-    applicationId "me.saket.baseandroidproject"
+    applicationId "me.saket.rxdiffutils"
     minSdkVersion versions.minSdk
     targetSdkVersion versions.compileSdk
     versionCode 1
@@ -31,6 +32,11 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
+  compileOptions {
+    targetCompatibility 1.8
+    sourceCompatibility 1.8
+  }
 }
 
 dependencies {
@@ -40,12 +46,11 @@ dependencies {
   annotationProcessor "com.google.auto.value:auto-value:$versions.autoValue"
   provided "com.jakewharton.auto.value:auto-value-annotations:$versions.autoValue"
 
-  implementation "com.google.dagger:dagger:$versions.dagger"
-  annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
-
   implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
   implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
   implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+  implementation "com.squareup.okhttp3:okhttp:$versions.okHttp"
+  implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
 
   implementation 'com.squareup.moshi:moshi:1.5.0'
   annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$versions.autoValueMoshi"

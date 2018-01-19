@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="me.saket.baseandroidproject">
+  package="me.saket.rxdiffutils">
+
+  <uses-permission android:name="android.permission.INTERNET" />
 
   <application
     android:allowBackup="true"

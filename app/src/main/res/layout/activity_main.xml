@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="me.saket.baseandroidproject.MainActivity">
+  android:orientation="vertical"
+  tools:context="me.saket.rxdiffutils.MainActivity">
 
-  <TextView
-    android:layout_width="wrap_content"
+  <EditText
+    android:id="@+id/searchquery"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Hello World!" />
-</FrameLayout>
+    android:layout_margin="16dp"
+    android:hint="@string/search_repositories"
+    android:inputType="textCapWords" />
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/recyclerview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+</LinearLayout>
