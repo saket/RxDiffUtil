@@ -1,4 +1,4 @@
 <resources>
   <string name="app_name">Rx.DiffUtils</string>
-  <string name="search_repositories">Search repositories…</string>
+  <string name="search_hint">Search wizards…</string>
 </resources>
