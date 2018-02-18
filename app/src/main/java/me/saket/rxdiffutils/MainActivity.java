@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     WizardsAdapter wizardsAdapter = new WizardsAdapter();
     searchResults
         .observeOn(io())
-        .compose(RxDiffUtils.calculateDiff(WizardDiffCallbacks::create))
+        .compose(RxDiffUtil.calculateDiff(WizardDiffCallbacks::create))
         .observeOn(mainThread())
         .takeUntil(onDestroys)
         .subscribe(wizardsAdapter);
