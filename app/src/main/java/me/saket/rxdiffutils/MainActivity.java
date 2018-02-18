@@ -8,15 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.jakewharton.rxbinding2.internal.Notification;
 import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.jakewharton.rxrelay2.BehaviorRelay;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.jakewharton.rxrelay2.Relay;
 import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
+
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.Observable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,16 +35,12 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     MinistryOfMagic ministryOfMagic = new MinistryOfMagic();
-    Relay<List<Wizard>> wizards = BehaviorRelay.create();
-
-    RxTextView.textChanges(searchQueryField)
+    Observable<List<Wizard>> searchResults = RxTextView.textChanges(searchQueryField)
         .map(CharSequence::toString)
-        .switchMapSingle(ministryOfMagic::search)
-        .takeUntil(onDestroys)
-        .subscribe(wizards, error -> error.printStackTrace());
+        .switchMapSingle(ministryOfMagic::search);
 
     WizardsAdapter wizardsAdapter = new WizardsAdapter();
-    wizards
+    searchResults
         .observeOn(io())
         .compose(RxDiffUtils.calculateDiff(WizardDiffCallbacks::create))
         .observeOn(mainThread())
