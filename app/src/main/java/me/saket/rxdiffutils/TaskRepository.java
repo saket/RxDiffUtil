@@ -1,10 +1,9 @@
 package me.saket.rxdiffutils;
 
-import io.reactivex.Observable;
-import io.reactivex.internal.functions.Functions;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 public class TaskRepository {
@@ -18,7 +17,7 @@ public class TaskRepository {
         completedTasks.changes().doOnNext(o -> Timber.i("boop")),
         (pending, completed) -> {
           List<Task> merged = new ArrayList<>(pending.size() + completed.size());
-          merged.addAll();
+          merged.addAll(pending);
           merged.addAll(completed);
           Timber.i("merged: %s", merged.size());
           return merged;
