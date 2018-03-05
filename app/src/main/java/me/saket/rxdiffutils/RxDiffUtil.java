@@ -12,7 +12,7 @@ import io.reactivex.functions.BiFunction;
 
 public class RxDiffUtil {
 
-  public static <T> ObservableTransformer<List<T>, Pair<List<T>, DiffResult>> calculateDiff(
+  public static <T> ObservableTransformer<List<T>, Pair<List<T>, DiffResult>> calculate(
       BiFunction<List<T>, List<T>, DiffUtil.Callback> diffCallbacks)
   {
     Pair<List<T>, DiffUtil.DiffResult> initialPair = Pair.create(Collections.emptyList(), null);
