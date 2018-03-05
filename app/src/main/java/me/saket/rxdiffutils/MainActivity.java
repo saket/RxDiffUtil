@@ -7,26 +7,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.EditText;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.jakewharton.rxbinding2.internal.Notification;
-import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.jakewharton.rxrelay2.Relay;
 import com.mikepenz.itemanimators.SlideDownAlphaAnimator;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.reactivex.Observable;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-  @BindView(R.id.searchquery) EditText searchQueryField;
   @BindView(R.id.recyclerview) RecyclerView recyclerView;
 
   private final Relay<Object> onDestroys = PublishRelay.create();
+  private TaskRepository taskRepository = new TaskRepository();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,26 +28,33 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    MinistryOfMagic ministryOfMagic = new MinistryOfMagic();
-    Observable<List<Wizard>> searchResults = RxTextView.textChanges(searchQueryField)
-        .map(CharSequence::toString)
-        .switchMapSingle(ministryOfMagic::search);
+    for (int i = 0; i < 5; i++) {
+      taskRepository.addPendingTask(Task.pending(i, "Task #" + i));
+    }
+    Timber.i("tasks: %s", taskRepository.pendingTasks.size());
 
-    WizardsAdapter wizardsAdapter = new WizardsAdapter();
-    searchResults
+    TaskAdapter taskAdapter = new TaskAdapter();
+    taskRepository.streamTasks()
+        .doOnNext(o -> Timber.i("found %s tasks", o.size()))
         .observeOn(io())
-        .compose(RxDiffUtil.calculate(WizardDiffCallbacks::create))
+        .compose(RxDiffUtil.calculate(TaskItemDiffer::create))
         .observeOn(mainThread())
         .takeUntil(onDestroys)
-        .subscribe(wizardsAdapter);
+        .subscribe(taskAdapter);
 
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setItemAnimator(new SlideDownAlphaAnimator());
-    recyclerView.setAdapter(wizardsAdapter);
+    recyclerView.setAdapter(taskAdapter);
 
-    wizardsAdapter.itemClicks()
+    taskAdapter.itemClicks()
         .takeUntil(onDestroys)
-        .subscribe(wizard -> startActivity(Intents.forGoogleSearch(wizard.name())));
+        .subscribe(task -> {
+          if (task.isChecked()) {
+            taskRepository.markAsPending(task);
+          } else {
+            taskRepository.markAsCompleted(task);
+          }
+        });
   }
 
   @Override

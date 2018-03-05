@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:background="@color/window_background"
   android:foreground="?attr/selectableItemBackground"
   android:orientation="vertical">
 
-  <TextView
-    android:id="@+id/wizard_name"
+  <CheckBox
+    android:id="@+id/task_label"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="12dp"
     android:layout_marginStart="19dp"
     android:layout_marginEnd="19dp"
     android:fontFamily="sans-serif-medium"
-    android:textColor="@color/gray_900" />
-
-  <TextView
-    android:id="@+id/wizard_house"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="19dp"
-    android:layout_marginEnd="19dp" />
+    android:textColor="@color/gray_900"
+    tools:text="Buy milk" />
 
   <View
     android:layout_width="match_parent"
